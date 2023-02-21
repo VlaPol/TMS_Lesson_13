@@ -70,12 +70,19 @@ public class Homework13Test {
                     System.out.println(intList);
                 }
                 case 7 ->{
+
                     scanner = new Scanner(System.in);
                     System.out.print("Enter left bound: ");
-                    int leftBound = scanner.nextInt();
-                    System.out.print("Enter right bound: ");
-                    int rightBound = scanner.nextInt();
-                    System.out.println(intList.subList(leftBound, rightBound));
+                    int leftBound = Integer.parseInt(scanner.nextLine());
+                    System.out.print("Need right bound? [y/n]");
+                    char answer = scanner.next().charAt(0);
+                    if (answer == 'y') {
+                        System.out.print("Enter right bound: ");
+                        int rightBound = scanner.nextInt();
+                        System.out.println(intList.subList(leftBound, rightBound));
+                    } else {
+                        System.out.println(intList.subList(leftBound));
+                    }
                 }
                 case 8 ->{
                     scanner = new Scanner(System.in);

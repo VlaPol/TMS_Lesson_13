@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class IntList {
 
-    private int[] arrayList;
+    private int[] arrayList = new int[0];
 
     public IntList() {
     }
@@ -17,9 +17,7 @@ public class IntList {
 
         String resultString = "[";
 
-        if (arrayList == null) {
-            return "null";
-        } else if (arrayList.length == 0) {
+        if (arrayList.length == 0) {
             return "[]";
         } else {
             for (int i = 0; i < arrayList.length - 1; i++) {
@@ -33,25 +31,16 @@ public class IntList {
 
     public int get(int index) {
 
-        if (arrayList == null || arrayList.length == 0) {
-            throw new IllegalArgumentException("NO place for looking");
-        }
-
         if (index >= arrayList.length || index < 0) {
             throw new IllegalArgumentException("No element with index [" + index + "] in the list");
         }
+        return arrayList[index];
 
-        for (int i = 0; i < arrayList.length; i++) {
-            if (index == i) {
-                return arrayList[i];
-            }
-        }
-        return 0;
     }
 
     public int set(int index, int element) {
 
-        if (arrayList == null || arrayList.length == 0) {
+        if (arrayList.length == 0) {
             throw new IllegalArgumentException("No elements in the list!");
         }
 
@@ -60,37 +49,19 @@ public class IntList {
         }
 
         int returnedElement = get(index);
-
-        for (int i = 0; i < arrayList.length; i++) {
-            if (index == i) {
-                arrayList[i] = element;
-                break;
-            }
-        }
+        arrayList[index] = element;
         return returnedElement;
     }
 
     public int size() {
-        if (arrayList != null) {
-            return arrayList.length;
-        } else {
-            return 0;
-        }
+        return arrayList.length;
     }
 
     public void add(int element) {
 
-        if (arrayList == null) {
-            throw new IllegalArgumentException("Wrong argument");
-        }
-
         int[] addOneArray;
 
-        if (arrayList.length != 0) {
-            addOneArray = new int[arrayList.length + 1];
-        } else {
-            addOneArray = new int[1];
-        }
+        addOneArray = new int[arrayList.length + 1];
 
         System.arraycopy(arrayList, 0, addOneArray, 0, arrayList.length);
         addOneArray[arrayList.length] = element;
@@ -99,7 +70,7 @@ public class IntList {
 
     public int remove(int index) {
 
-        if (arrayList == null || arrayList.length == 0) {
+        if (arrayList.length == 0) {
             throw new IllegalArgumentException("List is empty");
         }
 
@@ -124,26 +95,41 @@ public class IntList {
         return deletedDigit;
     }
 
+    public IntList subList(int startIndexInclusive) {
+
+        if (startIndexInclusive < 0 || startIndexInclusive > arrayList.length) {
+            throw new IllegalArgumentException("Bad one of bounds");
+        }
+
+        int[] tmpArray = new int[arrayList.length - startIndexInclusive];
+
+        int j = 0;
+        for (int i = startIndexInclusive; i < arrayList.length; i++) {
+            tmpArray[j] = arrayList[i];
+            j++;
+        }
+
+        return new IntList(tmpArray);
+    }
+
     public IntList subList(int startIndexInclusive, int endIndexExclusive) {
 
         if (startIndexInclusive < 0 || endIndexExclusive > arrayList.length || startIndexInclusive > endIndexExclusive) {
             throw new IllegalArgumentException("Bad one of bounds");
         }
 
-        IntList newList = new IntList(new int[0]);
+        int[] tmpArray = new int[endIndexExclusive - startIndexInclusive];
 
+        int j = 0;
         for (int i = startIndexInclusive; i < endIndexExclusive; i++) {
-            newList.add(arrayList[i]);
+            tmpArray[j] = this.arrayList[i];
+            j++;
         }
 
-        return newList;
+        return new IntList(tmpArray);
     }
 
     public int lastIndexOf(int element) {
-
-        if (arrayList == null || arrayList.length == 0) {
-            throw new IllegalArgumentException("NO place for looking");
-        }
 
         for (int i = arrayList.length - 1; i > 0; i--) {
             if (arrayList[i] == element) {
@@ -154,10 +140,6 @@ public class IntList {
     }
 
     public void sort() {
-
-        if (arrayList == null || arrayList.length == 0) {
-            throw new IllegalArgumentException("NO place for looking");
-        }
 
         int swap;
 
