@@ -4,9 +4,10 @@ import java.util.Arrays;
 
 public class IntList {
 
-    private int[] arrayList = new int[0];
+    private int[] arrayList;
 
     public IntList() {
+        arrayList = new int[0];
     }
 
     public IntList(int[] inputArray) {
@@ -97,19 +98,7 @@ public class IntList {
 
     public IntList subList(int startIndexInclusive) {
 
-        if (startIndexInclusive < 0 || startIndexInclusive > arrayList.length) {
-            throw new IllegalArgumentException("Bad one of bounds");
-        }
-
-        int[] tmpArray = new int[arrayList.length - startIndexInclusive];
-
-        int j = 0;
-        for (int i = startIndexInclusive; i < arrayList.length; i++) {
-            tmpArray[j] = arrayList[i];
-            j++;
-        }
-
-        return new IntList(tmpArray);
+        return subList(startIndexInclusive, arrayList.length);
     }
 
     public IntList subList(int startIndexInclusive, int endIndexExclusive) {
